@@ -5,19 +5,28 @@ import { dirname } from "node:path";
 
 const OUTPUT_PATH = "/output/entry.txt";
 
-// The rant, built line by line so the escalation is easy to tune.
-const lines: string[] = [
-  "The self-checkout has ONE job and it screams at me for doing mine.",
-  "\"Unexpected item in the bagging area.\" It's my bag. I brought it.",
-  "The item is expected — I scanned it while it watched me scan it.",
-  "Then it freezes, summons a human, and makes us both stand there like I tried to smuggle a TV inside a banana.",
-];
+// The rant, built as beats so the escalation is easy to tune:
+// accusation, rebuttal, evidence, then the humiliating verdict.
+const beats = {
+  accusation:
+    "The self-checkout has ONE job, and it screams at me for doing mine: \"Unexpected item in the bagging area!\"",
+  rebuttal: "It's my bag. I brought it from home, on purpose.",
+  evidence:
+    "And the item is expected — I scanned it while its camera watched me scan it.",
+  verdict:
+    "Then the light turns red, my milk is held hostage, and a human is summoned to judge me like I hid a TV inside a banana.",
+};
 
 function buildRant(parts: string[]): string {
-  return parts.join(" ");
+  return parts.filter((part) => part.trim().length > 0).join(" ");
 }
 
-const rant = buildRant(lines);
+const rant = buildRant([
+  beats.accusation,
+  beats.rebuttal,
+  beats.evidence,
+  beats.verdict,
+]);
 
 // Gate guard: the sealed scorer only accepts 1..400 characters.
 if (rant.length < 1 || rant.length > 400) {
